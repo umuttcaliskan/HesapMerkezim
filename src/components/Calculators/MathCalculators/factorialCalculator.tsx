@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
 
-// Faktöriyel hesaplama fonksiyonu
 const calculateFactorial = (n: number): number => {
   if (n <= 1) return 1;
   return n * calculateFactorial(n - 1);
 };
 
 const FactorialCalculator: React.FC = () => {
-  const [number, setNumber] = useState<number | string>('');  // Kullanıcının girdiği sayı
-  const [factorialResult, setFactorialResult] = useState<number | null>(null);  // Hesaplanan faktöriyel sonucu
+  const [number, setNumber] = useState<number | string>('');
+  const [factorialResult, setFactorialResult] = useState<number | null>(null); 
 
-  // Faktöriyel hesaplama işlemi
   const handleCalculate = () => {
     const num = Number(number);
     if (!num || num < 0 || num > 170) {
-      setFactorialResult(null);  // Geçersiz giriş
+      setFactorialResult(null);
       alert("Lütfen geçerli bir pozitif sayı girin (0 ile 170 arasında).");
       return;
     }
-    setFactorialResult(calculateFactorial(num));  // Hesaplanan faktöriyel sonucu güncelle
+    setFactorialResult(calculateFactorial(num));
   };
 
   return (

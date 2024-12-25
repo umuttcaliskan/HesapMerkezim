@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-// Puan hesaplama için gerekli türler
 interface Netler {
   turkceNet: number;
   matematikNet: number;
@@ -17,7 +16,6 @@ interface Puanlar {
 }
 
 const MsuExamScore: React.FC = () => {
-  // Kullanıcı girdileri için state'ler
   const [turkceDogru, setTurkceDogru] = useState<number>(0);
   const [matematikDogru, setMatematikDogru] = useState<number>(0);
   const [fenDogru, setFenDogru] = useState<number>(0);
@@ -37,13 +35,11 @@ const MsuExamScore: React.FC = () => {
     toplamNet: 0,
   });
 
-  // Net hesaplama fonksiyonu
   const hesaplaNet = (dogru: number, yanlis: number): number => {
-    const net = dogru - (yanlis / 4); // 4 yanlış 1 doğruyu götürür
-    return net < 0 ? 0 : net; // Net negatif olamaz
+    const net = dogru - (yanlis / 4);
+    return net < 0 ? 0 : net;
   };
 
-  // Puan hesaplama fonksiyonu
   const hesaplaPuan = () => {
     const turkceNet = hesaplaNet(turkceDogru, turkceYanlis);
     const matematikNet = hesaplaNet(matematikDogru, matematikYanlis);
@@ -53,7 +49,6 @@ const MsuExamScore: React.FC = () => {
     const toplamNet =
       turkceNet + matematikNet + fenNet + sosyalNet;
 
-    // Netleri ve toplam neti güncelle
     setNetler({
       turkceNet,
       matematikNet,
@@ -62,7 +57,6 @@ const MsuExamScore: React.FC = () => {
       toplamNet,
     });
 
-    // Puan katsayıları (Sayısal, Sözel, Eşit Ağırlık, Genel)
     const sayisalPuan =
       turkceNet * 3.125 +
       matematikNet * 4.375 +

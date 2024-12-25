@@ -23,7 +23,7 @@ const TestimonialSlider: React.FC = () => {
         quote: 'PickSoSo\'nun inovatif yazılımları, şirketimizin iş akışlarını tamamen dönüştürdü. Harika bir iş çıkarıyorlar.',
         name: 'Murat Caner',
         role: 'IT Müdürü',
-        image: '/api/placeholder/48/48'
+        image: Ali_Kemal_Ozturk
       },
       {
         quote: 'Yazılım çözümleriyle iş süreçlerimizde büyük verimlilik artışı sağladık. PickSoSo\'ya teşekkür ederiz!',
@@ -41,7 +41,7 @@ const TestimonialSlider: React.FC = () => {
         quote: 'PickSoSo\'nun çözümleriyle her şey çok daha hızlı ve güvenli hale geldi. İşimizi mükemmel bir şekilde destekliyorlar.',
         name: 'Seda Demir',
         role: 'Veritabanı Yöneticisi',
-        image: '/api/placeholder/48/48'
+        image: Elif_Yildiz
       },
       {
         quote: 'PickSoSo\'nun yazılımları sayesinde iş süreçlerimizdeki aksaklıkları ortadan kaldırdık. Performansımız önemli ölçüde arttı.',
@@ -53,13 +53,13 @@ const TestimonialSlider: React.FC = () => {
         quote: 'PickSoSo\'nun çözümleri ile iş yapış şeklimiz tamamen değişti. Verimlilik oranımız hızla arttı.',
         name: 'Ayşe Karaca',
         role: 'Pazarlama Müdürü',
-        image: '/api/placeholder/48/48'
+        image: Zeynep_Acar
       },
       {
         quote: 'PickSoSo\'nun yazılım çözümleri ile her şey çok daha hızlı, sorunsuz ve verimli hale geldi. Gerçekten faydalı bir deneyim.',
         name: 'Ahmet Yılmaz',
         role: 'Finans Müdürü',
-        image: '/api/placeholder/48/48'
+        image: Fatih_Gurbuz
       }    
   ];
 

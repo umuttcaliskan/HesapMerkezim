@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-// Chart.js modüllerini kaydediyoruz
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function SilverPriceChart() {
@@ -11,21 +10,19 @@ function SilverPriceChart() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // API'den veri çekme
   useEffect(() => {
     const fetchSilverPrice = async () => {
       try {
         const response = await axios.get('https://www.goldapi.io/api/XAG/USD', {
           headers: {
-            'x-access-token': 'goldapi-hl0sm4y10rpl-io',  // Gold API anahtarınızı buraya girin
+            'x-access-token': 'goldapi-hl0sm4y10rpl-io',
           },
         });
 
         const data = response.data;
 
-        // Yanıtı kontrol ediyoruz
         if (data && data.price) {
-          setSilverData(data); // Tüm veriyi silverData state'ine atıyoruz
+          setSilverData(data);
         } else {
           setError('API yanıtı beklenen formatta değil');
         }
@@ -37,18 +34,17 @@ function SilverPriceChart() {
     };
 
     fetchSilverPrice();
-    const intervalId = setInterval(fetchSilverPrice, 60000); // Her 1 dakikada bir fiyatı güncelle
+    const intervalId = setInterval(fetchSilverPrice, 60000);
 
-    return () => clearInterval(intervalId); // Temizleme
+    return () => clearInterval(intervalId);
   }, []);
 
-  // Veriyi grafik için hazırlama
   const chartData = {
-    labels: silverData ? [new Date().toLocaleTimeString()] : [], // Yalnızca bir etiket var, ilk veri alındığında
+    labels: silverData ? [new Date().toLocaleTimeString()] : [],
     datasets: [
       {
         label: 'Gümüş Fiyatı (USD)',
-        data: silverData ? [silverData.price] : [],  // Fiyatı grafik için ekliyoruz
+        data: silverData ? [silverData.price] : [],
         borderColor: 'silver',
         backgroundColor: 'rgba(192, 192, 192, 0.2)',
         fill: true,
@@ -59,7 +55,6 @@ function SilverPriceChart() {
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Gümüş Fiyatı (USD) Grafiği</h1>
-      
       {loading ? (
         <div className="flex justify-center items-center h-48">
           <span className="text-xl text-gray-600">Yükleniyor...</span>
@@ -70,10 +65,7 @@ function SilverPriceChart() {
         </div>
       ) : (
         <>
-          {/* Grafik */}
           <Line data={chartData} />
-          
-          {/* Güncel fiyat */}
           <div className="text-center mt-4 text-xl text-gray-800">
             {silverData ? (
               <p>Güncel Gümüş Fiyatı (USD): {silverData.price}</p>
@@ -81,8 +73,6 @@ function SilverPriceChart() {
               <p>Güncel gümüş fiyatı verisi alınamadı.</p>
             )}
           </div>
-
-          {/* Tüm diğer bilgileri kullanıcıya aktarma */}
           <div className="mt-6 space-y-4">
             <h2 className="text-2xl font-semibold text-gray-800">Gümüş Fiyatı Bilgileri</h2>
             {silverData && (

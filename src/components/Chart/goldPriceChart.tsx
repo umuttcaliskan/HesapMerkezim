@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-// Chart.js modüllerini kaydediyoruz
+// Chart.js modülleri
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function GoldPriceChart() {
@@ -11,21 +11,19 @@ function GoldPriceChart() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // API'den veri çekme
   useEffect(() => {
     const fetchGoldPrice = async () => {
       try {
         const response = await axios.get('https://www.goldapi.io/api/XAU/USD', {
           headers: {
-            'x-access-token': 'goldapi-hl0sm4y10rpl-io',  // Gold API anahtarınızı buraya girin
+            'x-access-token': 'goldapi-hl0sm4y10rpl-io',
           },
         });
 
         const data = response.data;
 
-        // Yanıtı kontrol ediyoruz
         if (data && data.price) {
-          setGoldData(data); // Tüm veriyi goldData state'ine atıyoruz
+          setGoldData(data);
         } else {
           setError('API yanıtı beklenen formatta değil');
         }
@@ -37,18 +35,17 @@ function GoldPriceChart() {
     };
 
     fetchGoldPrice();
-    const intervalId = setInterval(fetchGoldPrice, 60000); // Her 1 dakikada bir fiyatı güncelle
+    const intervalId = setInterval(fetchGoldPrice, 60000);
 
-    return () => clearInterval(intervalId); // Temizleme
+    return () => clearInterval(intervalId);
   }, []);
 
-  // Veriyi grafik için hazırlama
   const chartData = {
-    labels: goldData ? [new Date().toLocaleTimeString()] : [], // Yalnızca bir etiket var, ilk veri alındığında
+    labels: goldData ? [new Date().toLocaleTimeString()] : [],
     datasets: [
       {
         label: 'Altın Fiyatı (USD)',
-        data: goldData ? [goldData.price] : [],  // Fiyatı grafik için ekliyoruz
+        data: goldData ? [goldData.price] : [],
         borderColor: 'gold',
         backgroundColor: 'rgba(255, 223, 0, 0.2)',
         fill: true,
@@ -70,10 +67,8 @@ function GoldPriceChart() {
         </div>
       ) : (
         <>
-          {/* Grafik */}
           <Line data={chartData} />
 
-          {/* Güncel fiyat */}
           <div className="text-center mt-4 text-xl text-gray-800">
             {goldData ? (
               <p>Güncel Altın Fiyatı (USD): {goldData.price}</p>
@@ -82,7 +77,6 @@ function GoldPriceChart() {
             )}
           </div>
 
-          {/* Tüm diğer bilgileri kullanıcıya aktarma */}
           <div className="mt-6 space-y-4">
             <h2 className="text-2xl font-semibold text-gray-800">Altın Fiyatı Bilgileri</h2>
             {goldData && (

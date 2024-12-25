@@ -9,15 +9,14 @@ const factorial = (n: number): number => {
   return result;
 };
 
-// Kombinasyon hesaplama fonksiyonu: C(n, r) = n! / (r! * (n-r)!)
 const calculateCombination = (n: number, r: number): number => {
-  if (r > n) return 0;  // r, n'den büyük olamaz
+  if (r > n) return 0; 
   return factorial(n) / (factorial(r) * factorial(n - r));
 };
 
 const CombinationCalculator: React.FC = () => {
-  const [n, setN] = useState<number>(0);  // Toplam öğe sayısı
-  const [r, setR] = useState<number>(0);  // Seçilen öğe sayısı
+  const [n, setN] = useState<number>(0); 
+  const [r, setR] = useState<number>(0);
   const [combination, setCombination] = useState<number | null>(null); 
 
   const handlePositiveInput = (value: number): number => {

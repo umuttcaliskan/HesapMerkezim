@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 
-// Kök hesaplama fonksiyonu
 const calculateRoot = (x: number, n: number): number => {
   if (x < 0 && n % 2 === 0) {
     alert('Negatif sayılar için çift dereceden kök hesaplanamaz.');
     return NaN;
   }
-  return Math.pow(x, 1 / n);  // x'in n'inci dereceden kökü
+  return Math.pow(x, 1 / n);
 };
 
 const RootCalculator: React.FC = () => {
-  const [number, setNumber] = useState<number | string>('');  // Kullanıcının girdiği sayı
-  const [degree, setDegree] = useState<number | string>('');  // Kullanıcının girdiği derece
-  const [result, setResult] = useState<number | null>(null);  // Hesaplanan kök sonucu
+  const [number, setNumber] = useState<number | string>('');
+  const [degree, setDegree] = useState<number | string>('');
+  const [result, setResult] = useState<number | null>(null);
 
-  // Kök hesaplama işlemi
   const handleCalculate = () => {
     const num = Number(number);
     const deg = Number(degree);

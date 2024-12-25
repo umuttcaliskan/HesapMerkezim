@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-// Yaş bilgisi için bir tip tanımlıyoruz
+
 interface AgeInfo {
   years: number;
   months: number;
@@ -14,20 +14,19 @@ interface CountdownInfo {
 }
 
 const BirthDateCalculator: React.FC = () => {
-  const [birthDate, setBirthDate] = useState<string>('');  // Doğum tarihi, string türünde
-  const [ageInfo, setAgeInfo] = useState<AgeInfo | null>(null);  // Yaş bilgisi, AgeInfo tipinde veya null
-  const [countdownInfo, setCountdownInfo] = useState<CountdownInfo | null>(null);  // Doğuma kalan süre
+  const [birthDate, setBirthDate] = useState<string>('');
+  const [ageInfo, setAgeInfo] = useState<AgeInfo | null>(null);  
+  const [countdownInfo, setCountdownInfo] = useState<CountdownInfo | null>(null); 
 
-  // Yaş hesaplama fonksiyonu
+
   const calculateAge = () => {
-    if (!birthDate) return;  // Eğer doğum tarihi girilmemişse, hiçbir şey yapma
+    if (!birthDate) return;  
 
     const today = new Date();
     const birth = new Date(birthDate);
 
-    // Eğer doğum tarihi geçmişse, yaşı hesapla
     if (birth <= today) {
-      const ageInMilliseconds = today.getTime() - birth.getTime(); // Doğum tarihi ile bugünün farkı (milisaniye cinsinden)
+      const ageInMilliseconds = today.getTime() - birth.getTime();
       const ageDate = new Date(ageInMilliseconds);
       
       const years = ageDate.getUTCFullYear() - 1970;
@@ -36,12 +35,12 @@ const BirthDateCalculator: React.FC = () => {
 
       setAgeInfo({
         years,
-        months: months >= 0 ? months : 12 + months,  // Eğer ay negatifse, bir yıl ekleyip ayı düzelt
-        days: days >= 0 ? days : new Date(today.getFullYear(), today.getMonth(), 0).getDate() + days,  // Gün negatifse, ayın son gününe göre düzelt
+        months: months >= 0 ? months : 12 + months, 
+        days: days >= 0 ? days : new Date(today.getFullYear(), today.getMonth(), 0).getDate() + days, 
       });
-      setCountdownInfo(null);  // Eğer doğum tarihi geçmişse geri sayım bilgisi sıfırlanır
+      setCountdownInfo(null);
     } else {
-      // Eğer doğum tarihi gelecekteyse, doğuma kalan süreyi hesapla
+      
       const countdownInMilliseconds = birth.getTime() - today.getTime();
       const countdownDate = new Date(countdownInMilliseconds);
 
@@ -51,10 +50,10 @@ const BirthDateCalculator: React.FC = () => {
 
       setCountdownInfo({
         years,
-        months: months >= 0 ? months : 12 + months,  // Eğer ay negatifse, bir yıl ekleyip ayı düzelt
-        days: days >= 0 ? days : new Date(today.getFullYear(), today.getMonth(), 0).getDate() + days,  // Gün negatifse, ayın son gününe göre düzelt
+        months: months >= 0 ? months : 12 + months, 
+        days: days >= 0 ? days : new Date(today.getFullYear(), today.getMonth(), 0).getDate() + days,
       });
-      setAgeInfo(null);  // Eğer doğum tarihi gelecekteyse, yaş bilgisi sıfırlanır
+      setAgeInfo(null);
     }
   };
 

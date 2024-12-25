@@ -65,15 +65,12 @@ const PersonalLoanCalculation = () => {
     setMonthlyPayment(monthlyPayment);
     setTotalRepayment(totalRepayment);
 
-    // Aylık ve yıllık maliyet oranını hesaplama
     const monthlyRate = (interestRate / 100) / 12;
-    setMonthlyCostRate(monthlyRate * 100); // Aylık maliyet oranı (faiz oranı)
+    setMonthlyCostRate(monthlyRate * 100);
     
-    // Yıllık maliyet oranı hesaplama (yıllık faiz)
     const annualRate = monthlyRate * 12;
-    setAnnualCostRate(annualRate * 100); // Yıllık maliyet oranı
+    setAnnualCostRate(annualRate * 100);
 
-    // Ödeme tablosu hesaplama
     const schedule = calculatePaymentSchedule(loanAmount, interestRate, term, monthlyPayment);
     setPaymentSchedule(schedule);
   };

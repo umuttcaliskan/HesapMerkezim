@@ -34,13 +34,11 @@ const LgsExamScore: React.FC = () => {
     toplamNet: 0,
   });
 
-  // Net hesaplama fonksiyonu
   const hesaplaNet = (dogru: number, yanlis: number) => {
     const net = dogru - Math.floor(yanlis / 3);
-    return net < 0 ? 0 : net; // Net negatif olamaz
+    return net < 0 ? 0 : net;
   };
 
-  // Puan hesaplama fonksiyonu
   const hesaplaPuan = () => {
     const turkceNet = hesaplaNet(turkceDogru, turkceYanlis);
     const matematikNet = hesaplaNet(matematikDogru, matematikYanlis);
@@ -52,7 +50,6 @@ const LgsExamScore: React.FC = () => {
     const toplamNet =
       turkceNet + matematikNet + fenNet + tcinkTarNet + dinKultureNet + yabanciDilNet;
 
-    // Netleri ve toplam neti güncelle
     setNetler({
       turkceNet,
       matematikNet,

@@ -3,29 +3,26 @@ import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-// Chart.js modüllerini kaydediyoruz
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function PalladiumPriceChart() {
-  const [palladiumData, setPalladiumData] = useState(null);  // Tüm API verisini burada tutuyoruz
+  const [palladiumData, setPalladiumData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // API'den veri çekme
   useEffect(() => {
     const fetchPalladiumPrice = async () => {
       try {
         const response = await axios.get('https://www.goldapi.io/api/XPD/USD', {
           headers: {
-            'x-access-token': 'goldapi-hl0sm4y10rpl-io',  // Gold API anahtarınızı buraya girin
+            'x-access-token': 'goldapi-hl0sm4y10rpl-io',
           },
         });
 
         const data = response.data;
 
-        // Yanıtı kontrol ediyoruz
         if (data && data.price) {
-          setPalladiumData(data);  // Veriyi tümüyle palladiumData state'ine atıyoruz
+          setPalladiumData(data);
         } else {
           setError('API yanıtı beklenen formatta değil');
         }
@@ -37,18 +34,17 @@ function PalladiumPriceChart() {
     };
 
     fetchPalladiumPrice();
-    const intervalId = setInterval(fetchPalladiumPrice, 60000); // Her 1 dakikada bir fiyatı güncelle
+    const intervalId = setInterval(fetchPalladiumPrice, 60000);
 
-    return () => clearInterval(intervalId); // Temizleme
+    return () => clearInterval(intervalId);
   }, []);
 
-  // Veriyi grafik için hazırlama
   const chartData = {
-    labels: palladiumData ? [new Date().toLocaleTimeString()] : [], // Yalnızca bir etiket var, ilk veri alındığında
+    labels: palladiumData ? [new Date().toLocaleTimeString()] : [],
     datasets: [
       {
         label: 'Paladyum Fiyatı (USD)',
-        data: palladiumData ? [palladiumData.price] : [],  // Fiyatı grafik için ekliyoruz
+        data: palladiumData ? [palladiumData.price] : [],
         borderColor: 'silver',
         backgroundColor: 'rgba(192, 192, 192, 0.2)',
         fill: true,
@@ -70,10 +66,8 @@ function PalladiumPriceChart() {
         </div>
       ) : (
         <>
-          {/* Grafik */}
           <Line data={chartData} />
 
-          {/* Güncel fiyat */}
           <div className="text-center mt-4 text-xl text-gray-800">
             {palladiumData ? (
               <p>Güncel Paladyum Fiyatı (USD): {palladiumData.price}</p>
@@ -82,7 +76,6 @@ function PalladiumPriceChart() {
             )}
           </div>
 
-          {/* Tüm diğer bilgileri kullanıcıya aktarma */}
           <div className="mt-6 space-y-4">
             <h2 className="text-2xl font-semibold text-gray-800">Paladyum Fiyatı Bilgileri</h2>
             {palladiumData && (

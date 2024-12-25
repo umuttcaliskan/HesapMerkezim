@@ -23,14 +23,12 @@ import CoinFlip from '../Calculators/RaffleTools/coinFlip';
 import DiceRoll from '../Calculators/RaffleTools/diceRoll';
 import IdealWeightCalculator from '../Calculators/HealthCalculators/idealWeightCalculator';
 import WheelOfFortune from '../Calculators/RaffleTools/wheelOfFortune';
-import IQCalculator from '../Calculators/HealthCalculators/IQCalculator';
 
 const DropDown = () => {
   
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedOption, setSelectedOption] = useState<string>('Loan Calculator');
 
-  // Kategori seçenekleri
   const loanOptions = [
     'İhtiyaç Kredisi Hesaplama',
     'Kredi Kartı Asgari Ödeme Hesaplama'
@@ -123,8 +121,6 @@ const DropDown = () => {
         return <IdealWeightCalculator />;
       case 'Çarkıfelek Oyunu':
         return <WheelOfFortune />;
-      case 'IQ Hesaplama':
-        return <IQCalculator />;
       default:
         return <PersonalLoanCalculation />;
     }
@@ -231,7 +227,6 @@ const DropDown = () => {
         </select>
       )}
 
-      {/* İlgili Seçenek Render Edildi */}
       <div className="mt-6">
         {renderComponent()}
       </div>

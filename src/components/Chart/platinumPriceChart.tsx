@@ -3,29 +3,26 @@ import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-// Chart.js modüllerini kaydediyoruz
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function PlatinumPriceChart() {
-  const [platinumData, setPlatinumData] = useState(null);  // Tüm API verisini burada tutuyoruz
+  const [platinumData, setPlatinumData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // API'den veri çekme
   useEffect(() => {
     const fetchPlatinumPrice = async () => {
       try {
         const response = await axios.get('https://www.goldapi.io/api/XPT/USD', {
           headers: {
-            'x-access-token': 'goldapi-hl0sm4y10rpl-io',  // Gold API anahtarınızı buraya girin
+            'x-access-token': 'goldapi-hl0sm4y10rpl-io',
           },
         });
 
         const data = response.data;
 
-        // Yanıtı kontrol ediyoruz
         if (data && data.price) {
-          setPlatinumData(data);  // Veriyi tümüyle platinumData state'ine atıyoruz
+          setPlatinumData(data);
         } else {
           setError('API yanıtı beklenen formatta değil');
         }
@@ -37,18 +34,17 @@ function PlatinumPriceChart() {
     };
 
     fetchPlatinumPrice();
-    const intervalId = setInterval(fetchPlatinumPrice, 60000); // Her 1 dakikada bir fiyatı güncelle
+    const intervalId = setInterval(fetchPlatinumPrice, 60000);
 
-    return () => clearInterval(intervalId); // Temizleme
+    return () => clearInterval(intervalId);
   }, []);
 
-  // Veriyi grafik için hazırlama
   const chartData = {
-    labels: platinumData ? [new Date().toLocaleTimeString()] : [], // Yalnızca bir etiket var, ilk veri alındığında
+    labels: platinumData ? [new Date().toLocaleTimeString()] : [], 
     datasets: [
       {
         label: 'Platin Fiyatı (USD)',
-        data: platinumData ? [platinumData.price] : [],  // Fiyatı grafik için ekliyoruz
+        data: platinumData ? [platinumData.price] : [], 
         borderColor: 'platinum',
         backgroundColor: 'rgba(229, 228, 226, 0.2)',
         fill: true,
@@ -70,10 +66,8 @@ function PlatinumPriceChart() {
         </div>
       ) : (
         <>
-          {/* Grafik */}
           <Line data={chartData} />
           
-          {/* Güncel fiyat */}
           <div className="text-center mt-4 text-xl text-gray-800">
             {platinumData ? (
               <p>Güncel Platin Fiyatı (USD): {platinumData.price}</p>
@@ -82,7 +76,6 @@ function PlatinumPriceChart() {
             )}
           </div>
 
-          {/* Tüm diğer bilgileri kullanıcıya aktarma */}
           <div className="mt-6 space-y-4">
             <h2 className="text-2xl font-semibold text-gray-800">Platin Fiyatı Bilgileri</h2>
             {platinumData && (

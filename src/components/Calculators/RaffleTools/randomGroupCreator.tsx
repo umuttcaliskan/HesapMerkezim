@@ -19,7 +19,7 @@ const createGroups = (participants: string[], numberOfGroups: number): string[][
 };
 
 const RandomGroupCreator: React.FC = () => {
-  const [participants, setParticipants] = useState<string>('');  // Katılımcı listesi
+  const [participants, setParticipants] = useState<string>('');
   const [numberOfGroups, setNumberOfGroups] = useState<number>(1);
   const [groups, setGroups] = useState<string[][]>([]);
 

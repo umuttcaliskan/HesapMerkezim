@@ -9,15 +9,15 @@ const factorial = (n: number): number => {
   return result;
 };
 
-// Permütasyon hesaplama fonksiyonu
+
 const calculatePermutation = (n: number, r: number): number => {
-  if (r > n) return 0;  // r, n'den büyük olamaz
+  if (r > n) return 0;
   return factorial(n) / factorial(n - r);
 };
 
 const PermutationCalculator: React.FC = () => {
-  const [n, setN] = useState<number>(0);  // Toplam öğe sayısı
-  const [r, setR] = useState<number>(0);  // Seçilen öğe sayısı
+  const [n, setN] = useState<number>(0);
+  const [r, setR] = useState<number>(0);
   const [permutation, setPermutation] = useState<number | null>(null);
 
   

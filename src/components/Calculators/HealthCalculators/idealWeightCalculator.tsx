@@ -23,17 +23,17 @@ const IdealWeightCalculator: React.FC = () => {
       return;
     }
 
-    // BMI Hesaplama = kilo / (boy in meters)²
+    // BMI Hesaplama
     const heightInMeters = height / 100;
     const bmi = weight / (heightInMeters * heightInMeters);
 
-    // Hamwi Formülü ile ideal kilo hesaplama
-    let baseWeight = 48; // Kadınlar için baz kilo
+ 
+    let baseWeight = 48; 
     if (gender === 'male') {
-      baseWeight = 52; // Erkekler için baz kilo
+      baseWeight = 52; 
     }
     
-    // 152.4 cm (5 feet) üzerindeki her 2.54 cm (1 inch) için
+
     const heightDiff = height - 152.4;
     const additionalWeight = (heightDiff / 2.54) * (gender === 'male' ? 1.9 : 1.7);
     const idealWeight = Math.round(baseWeight + additionalWeight);

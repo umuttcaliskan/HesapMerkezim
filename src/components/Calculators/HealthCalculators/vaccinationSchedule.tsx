@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-// Aşı takvimi verisi
+
 const vaccinationSchedule = [
   { months: 0, vaccine: "Hepatit-B 1. Aşı", dateOffset: 0 },
   { months: 1, vaccine: "Hepatit-B 2. Aşı", dateOffset: 1 },
@@ -14,7 +14,7 @@ const vaccinationSchedule = [
   { months: 156, vaccine: "Td Pekiştirme Aşısı", dateOffset: 156 },
 ];
 
-// Kısaltmaların anlamları
+
 const vaccineAbbreviations = {
   BCG: "Bacille - Calmette - Guerin (Tüberküloz - Verem) Aşısı",
   "DaBT - İPA - Hib": "Difteri, Boğmaca, Tetanos, İnaktif Polio, Hemofilus Influenza Tip B Aşısı (Beşli Karma Aşı)",
@@ -29,7 +29,6 @@ const VaccinationSchedule = () => {
   const [birthDate, setBirthDate] = useState('');
   const [vaccinationDates, setVaccinationDates] = useState([]);
 
-  // Tarih hesaplama fonksiyonu
   const calculateVaccinationDates = () => {
     if (!birthDate) return;
 
@@ -40,7 +39,7 @@ const VaccinationSchedule = () => {
       const vaccineDate = new Date(birth);
       vaccineDate.setMonth(birth.getMonth() + schedule.months);
 
-      const isPastDue = vaccineDate <= today; // Aşı tarihi geçmişse
+      const isPastDue = vaccineDate <= today;
 
       return {
         vaccine: schedule.vaccine,
