@@ -69,14 +69,14 @@ const Home = () => {
               Hesaplama araçlarını kullarak hızlı çözüme kolayca ulaşabilirsin!
             </p>
 
-            {/* Sabitlenmiş Hesap Makinesi Butonu */}
+            
             <div className="fixed right-5 top-1/2 transform -translate-y-1/2">
              <button 
                onClick={handleCalculatorOpenModal}
                className="w-12 sm:w-20 h-12 sm:h-20 bg-orange-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-blue-400 transition duration-200"
                >
               <FontAwesomeIcon icon={faCalculator} className="text-3xl  sm:text-5xl" />
-             </button>
+             </button> {/* Sabitlenmiş Hesap Makinesi */}
 
              <button 
                onClick={handleLuckyNumberGeneratorOpenModal}
@@ -84,7 +84,7 @@ const Home = () => {
                >
               <FontAwesomeIcon icon={faClover} className="text-3xl sm:text-5xl" />
 
-             </button>
+             </button> {/* Günün Şanslı Sayısı */}
             </div>
             
             
