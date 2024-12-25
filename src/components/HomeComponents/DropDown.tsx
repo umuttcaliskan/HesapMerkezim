@@ -23,9 +23,12 @@ import CoinFlip from '../Calculators/RaffleTools/coinFlip';
 import DiceRoll from '../Calculators/RaffleTools/diceRoll';
 import IdealWeightCalculator from '../Calculators/HealthCalculators/idealWeightCalculator';
 import WheelOfFortune from '../Calculators/RaffleTools/wheelOfFortune';
-
+import DateDifferenceCalculator from '../Calculators/TimeCalculators/dateDifferenceCalculator';
+import DayOfWeekCalculator from '../Calculators/TimeCalculators/dayOfWeekCalculator';
+import TimeDifferenceCalculator from '../Calculators/TimeCalculators/timeDifferenceCalculator';
+import DateManipulationCalculator from '../Calculators/TimeCalculators/dateManipulationCalculator';
 const DropDown = () => {
-  
+
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedOption, setSelectedOption] = useState<string>('Loan Calculator');
 
@@ -68,7 +71,14 @@ const DropDown = () => {
     'Çekiliş Yap',
     'Grup Kurası',
     'Yazı-Tura',
-    'Zar At'
+    'Zar At',
+  ];
+
+  const timeOptions = [
+    'İki Tarih Arasındaki Gün Farkı Hesaplama',
+    'Hangi Gün Hesaplama',
+    'Saat Farkı Hesaplama',
+    'Tarih Hesaplama'
   ];
 
   const renderComponent = () => {
@@ -121,6 +131,14 @@ const DropDown = () => {
         return <IdealWeightCalculator />;
       case 'Çarkıfelek Oyunu':
         return <WheelOfFortune />;
+      case 'İki Tarih Arasındaki Gün Farkı Hesaplama':
+        return <DateDifferenceCalculator />;
+      case 'Hangi Gün Hesaplama':
+        return <DayOfWeekCalculator />;
+      case 'Saat Farkı Hesaplama':
+        return <TimeDifferenceCalculator />;
+      case 'Tarih Hesaplama':
+        return <DateManipulationCalculator />;
       default:
         return <PersonalLoanCalculation />;
     }
@@ -140,12 +158,13 @@ const DropDown = () => {
         className="w-full p-2 border border-gray-300 rounded-md mb-4"
       >
         <option value="">Kategori Seçiniz</option>
-        <option value="Economy Calculations">Ekonomi Hesaplamaları</option>
         <option value="School Calculations">Eğitim Hesaplamaları</option>
+        <option value="Economy Calculations">Ekonomi Hesaplamaları</option>
         <option value="Fast Raffle">Hızlı Çekiliş</option>
         <option value="Loan Calculations">Kredi Hesaplamaları</option>
         <option value="Math Calculations">Matematik Hesaplamaları</option>
         <option value="Health Calculations">Sağlık Hesaplamaları</option>
+        <option value="Time Calculations">Zaman Hesaplamaları</option>
       </select>
 
       {/* İkinci Dropdown - Seçenekler */}
@@ -222,6 +241,19 @@ const DropDown = () => {
         >
           <option value="">Hesaplama Seçiniz</option>
           {fastRaffleOptions.map((option, index) => (
+            <option key={index} value={option}>{option}</option>
+          ))}
+        </select>
+      )}
+
+      {selectedCategory === 'Time Calculations' && (
+        <select
+          value={selectedOption}
+          onChange={(e) => setSelectedOption(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-md mb-4"
+        >
+          <option value="">Hesaplama Seçiniz</option>
+          {timeOptions.map((option, index) => (
             <option key={index} value={option}>{option}</option>
           ))}
         </select>
