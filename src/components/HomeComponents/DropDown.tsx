@@ -48,7 +48,6 @@ const DropDown = () => {
     'Aşı Takvimi Hesaplama',
     'Doğum Tarihi Hesaplama',
     'İdeal Kilo Hesaplama',
-    'IQ Hesaplama'
   ];
 
   const mathCalculationOptions = [
