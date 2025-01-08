@@ -27,6 +27,8 @@ import DateDifferenceCalculator from '../Calculators/TimeCalculators/dateDiffere
 import DayOfWeekCalculator from '../Calculators/TimeCalculators/dayOfWeekCalculator';
 import TimeDifferenceCalculator from '../Calculators/TimeCalculators/timeDifferenceCalculator';
 import DateManipulationCalculator from '../Calculators/TimeCalculators/dateManipulationCalculator';
+import InternetSpeedTest from '../speedtest';
+
 const DropDown = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -77,7 +79,12 @@ const DropDown = () => {
     'İki Tarih Arasındaki Gün Farkı Hesaplama',
     'Hangi Gün Hesaplama',
     'Saat Farkı Hesaplama',
-    'Tarih Hesaplama'
+    'Tarih Hesaplama',
+    'ornek'
+  ];
+
+  const dailyOptions = [
+    'İnternet Hızı Testi',
   ];
 
   const renderComponent = () => {
@@ -138,6 +145,8 @@ const DropDown = () => {
         return <TimeDifferenceCalculator />;
       case 'Tarih Hesaplama':
         return <DateManipulationCalculator />;
+      case 'İnternet Hızı Testi':
+        return <InternetSpeedTest />;
       default:
         return <PersonalLoanCalculation />;
     }
@@ -164,6 +173,7 @@ const DropDown = () => {
         <option value="Math Calculations">Matematik Hesaplamaları</option>
         <option value="Health Calculations">Sağlık Hesaplamaları</option>
         <option value="Time Calculations">Zaman Hesaplamaları</option>
+        <option value="Daily Calculations">Gündelik Hesaplamalar</option>
       </select>
 
       {/* İkinci Dropdown - Seçenekler */}
@@ -253,6 +263,19 @@ const DropDown = () => {
         >
           <option value="">Hesaplama Seçiniz</option>
           {timeOptions.map((option, index) => (
+            <option key={index} value={option}>{option}</option>
+          ))}
+        </select>
+      )}
+
+      {selectedCategory === 'Daily Calculations' && (
+        <select
+          value={selectedOption}
+          onChange={(e) => setSelectedOption(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-md mb-4"
+        >
+          <option value="">Hesaplama Seçiniz</option>
+          {dailyOptions.map((option, index) => (
             <option key={index} value={option}>{option}</option>
           ))}
         </select>
