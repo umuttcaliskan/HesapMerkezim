@@ -27,7 +27,7 @@ import DateDifferenceCalculator from '../Calculators/TimeCalculators/dateDiffere
 import DayOfWeekCalculator from '../Calculators/TimeCalculators/dayOfWeekCalculator';
 import TimeDifferenceCalculator from '../Calculators/TimeCalculators/timeDifferenceCalculator';
 import DateManipulationCalculator from '../Calculators/TimeCalculators/dateManipulationCalculator';
-import InternetSpeedTest from '../speedtest';
+import InternetSpeedTest from '../Calculators/DailyCalculators/speedTest';
 
 const DropDown = () => {
 
