@@ -80,7 +80,6 @@ const DropDown = () => {
     'Hangi Gün Hesaplama',
     'Saat Farkı Hesaplama',
     'Tarih Hesaplama',
-    'ornek'
   ];
 
   const dailyOptions = [
