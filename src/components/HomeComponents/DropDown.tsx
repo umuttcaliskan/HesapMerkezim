@@ -1,288 +1,238 @@
 import React, { useState } from 'react';
-import PersonalLoanCalculation from '../Calculators/LoanCalculators/personalLoanCalculation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faCalculator, 
+  faClock, 
+  faHeartPulse, 
+  faDice, 
+  faSquareRootVariable,
+  faCreditCard,
+  faChevronDown,
+  faGraduationCap,
+  faChartLine,
+  faTools
+} from '@fortawesome/free-solid-svg-icons';
 import Calculator from '../calculatorTool';
-import HighSchoolAverageCalculator from '../Calculators/SchoolCalculators/highSchoolAverageCalculator';
+import PersonalLoanCalculation from '../Calculators/LoanCalculators/personalLoanCalculation';
 import CreditCardMinAmount from '../Calculators/LoanCalculators/creditCardMinAmount';
-import LgsExamScore from '../Calculators/SchoolCalculators/LgsExamScore';
-import StartingSchoolAge from '../Calculators/SchoolCalculators/startingSchoolAge';
-import VaccinationSchedule from '../Calculators/HealthCalculators/vaccinationSchedule';
 import BirthDateCalculator from '../Calculators/HealthCalculators/BirthDateCalculator';
-import MsuExamScore from '../Calculators/SchoolCalculators/MsuExamScore';
+import IdealWeightCalculator from '../Calculators/HealthCalculators/idealWeightCalculator';
+import VaccinationSchedule from '../Calculators/HealthCalculators/vaccinationSchedule';
+import DiceRoll from '../Calculators/RaffleTools/diceRoll';
+import CoinFlip from '../Calculators/RaffleTools/coinFlip';
+import WheelOfFortune from '../Calculators/RaffleTools/wheelOfFortune';
+import RaffleDraw from '../Calculators/RaffleTools/raffleDraw';
+import TimeDifferenceCalculator from '../Calculators/TimeCalculators/timeDifferenceCalculator';
+import DateDifferenceCalculator from '../Calculators/TimeCalculators/dateDifferenceCalculator';
+import DayOfWeekCalculator from '../Calculators/TimeCalculators/dayOfWeekCalculator';
+import DateManipulationCalculator from '../Calculators/TimeCalculators/dateManipulationCalculator';
 import FactorialCalculator from '../Calculators/MathCalculators/factorialCalculator';
 import RootCalculator from '../Calculators/MathCalculators/rootCalculator';
-import RaffleDraw from '../Calculators/RaffleTools/raffleDraw';
+import PermutationCalculator from '../Calculators/MathCalculators/permutationCalculator';
 import AreaCalculator from '../Calculators/MathCalculators/areaCalculator';
 import CombinationCalculator from '../Calculators/MathCalculators/combinationCalculator';
-import PermutationCalculator from '../Calculators/MathCalculators/permutationCalculator';
+import HighSchoolAverageCalculator from '../Calculators/SchoolCalculators/highSchoolAverageCalculator';
+import LgsExamScore from '../Calculators/SchoolCalculators/LgsExamScore';
+import StartingSchoolAge from '../Calculators/SchoolCalculators/startingSchoolAge';
+import MsuExamScore from '../Calculators/SchoolCalculators/MsuExamScore';
 import GoldPriceChart from '../Chart/goldPriceChart';
 import SilverPriceChart from '../Chart/silverPriceChart';
 import PlatinumPriceChart from '../Chart/platinumPriceChart';
 import PalladiumPriceChart from '../Chart/palladiumPriceChart';
-import RandomGroupCreator from '../Calculators/RaffleTools/randomGroupCreator';
-import CoinFlip from '../Calculators/RaffleTools/coinFlip';
-import DiceRoll from '../Calculators/RaffleTools/diceRoll';
-import IdealWeightCalculator from '../Calculators/HealthCalculators/idealWeightCalculator';
-import WheelOfFortune from '../Calculators/RaffleTools/wheelOfFortune';
-import DateDifferenceCalculator from '../Calculators/TimeCalculators/dateDifferenceCalculator';
-import DayOfWeekCalculator from '../Calculators/TimeCalculators/dayOfWeekCalculator';
-import TimeDifferenceCalculator from '../Calculators/TimeCalculators/timeDifferenceCalculator';
-import DateManipulationCalculator from '../Calculators/TimeCalculators/dateManipulationCalculator';
 import InternetSpeedTest from '../Calculators/DailyCalculators/speedTest';
 
+const categories = {
+  math: {
+    name: 'Matematik',
+    icon: faSquareRootVariable,
+    color: 'from-blue-400 to-indigo-500',
+    tools: [
+      { name: 'Hesap Makinesi', component: Calculator },
+      { name: 'Faktöriyel', component: FactorialCalculator },
+      { name: 'Kök', component: RootCalculator },
+      { name: 'Permütasyon', component: PermutationCalculator },
+      { name: 'Alan', component: AreaCalculator },
+      { name: 'Kombinasyon', component: CombinationCalculator }
+    ]
+  },
+  education: {
+    name: 'Eğitim',
+    icon: faGraduationCap,
+    color: 'from-yellow-400 to-orange-500',
+    tools: [
+      { name: 'Lise Not Ortalaması', component: HighSchoolAverageCalculator },
+      { name: 'LGS Puan Hesaplama', component: LgsExamScore },
+      { name: 'Okula Başlama Yaşı', component: StartingSchoolAge },
+      { name: 'MSÜ Puan Hesaplama', component: MsuExamScore }
+    ]
+  },
+  economy: {
+    name: 'Ekonomi',
+    icon: faChartLine,
+    color: 'from-green-400 to-teal-500',
+    tools: [
+      { name: 'Altın Fiyatları', component: GoldPriceChart },
+      { name: 'Gümüş Fiyatları', component: SilverPriceChart },
+      { name: 'Platin Fiyatları', component: PlatinumPriceChart },
+      { name: 'Paladyum Fiyatları', component: PalladiumPriceChart }
+    ]
+  },
+  loan: {
+    name: 'Kredi/Borç',
+    icon: faCreditCard,
+    color: 'from-green-400 to-emerald-500',
+    tools: [
+      { name: 'İhtiyaç Kredisi Hesaplama', component: PersonalLoanCalculation },
+      { name: 'Kredi Kartı Asgari Ödeme', component: CreditCardMinAmount }
+    ]
+  },
+  health: {
+    name: 'Sağlık',
+    icon: faHeartPulse,
+    color: 'from-red-400 to-pink-500',
+    tools: [
+      { name: 'Doğum Tarihi', component: BirthDateCalculator },
+      { name: 'İdeal Kilo', component: IdealWeightCalculator },
+      { name: 'Aşı Takvimi', component: VaccinationSchedule }
+    ]
+  },
+  raffle: {
+    name: 'Çekiliş',
+    icon: faDice,
+    color: 'from-purple-400 to-violet-500',
+    tools: [
+      { name: 'Zar At', component: DiceRoll },
+      { name: 'Yazı Tura', component: CoinFlip },
+      { name: 'Çarkıfelek', component: WheelOfFortune },
+      { name: 'Çekiliş Yap', component: RaffleDraw }
+    ]
+  },
+  time: {
+    name: 'Zaman',
+    icon: faClock,
+    color: 'from-orange-400 to-amber-500',
+    tools: [
+      { name: 'Saat Farkı', component: TimeDifferenceCalculator },
+      { name: 'Tarih Farkı', component: DateDifferenceCalculator },
+      { name: 'Hangi Gün', component: DayOfWeekCalculator },
+      { name: 'Tarih Hesaplama', component: DateManipulationCalculator }
+    ]
+  },
+  daily: {
+    name: 'Gündelik',
+    icon: faTools,
+    color: 'from-cyan-400 to-blue-500',
+    tools: [
+      { name: 'İnternet Hız Testi', component: InternetSpeedTest }
+    ]
+  }
+};
+
 const DropDown = () => {
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedTool, setSelectedTool] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [selectedOption, setSelectedOption] = useState<string>('Loan Calculator');
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setSelectedTool(null);
+    setIsOpen(false);
+  };
 
-  const loanOptions = [
-    'İhtiyaç Kredisi Hesaplama',
-    'Kredi Kartı Asgari Ödeme Hesaplama'
-  ];
-
-  const schoolOptions = [
-    'Lise Not Ortalaması Hesaplama',
-    'LGS Puan Hesaplayıcı',
-    'Okula Başlama Yaşı',
-    'MSÜ Puan Hesaplayıcı'
-  ];
-
-  const healthOptions = [
-    'Aşı Takvimi Hesaplama',
-    'Doğum Tarihi Hesaplama',
-    'İdeal Kilo Hesaplama',
-  ];
-
-  const mathCalculationOptions = [
-    'Alan Hesaplama',
-    'Faktöriyel Hesaplama',
-    'Kombinasyon Hesaplama',
-    'Köklü Sayı Hesaplama',
-    'Permütasyon Hesaplama',
-  ];
-
-  const economyOptions = [
-    'Altın Fiyat Grafiği',
-    'Gümüş Fiyat Grafiği',
-    'Platin Fiyat Grafiği',
-    'Paladyum Fiyat Grafiği'
-  ];
-
-  const fastRaffleOptions = [
-    'Çarkıfelek Oyunu', 
-    'Çekiliş Yap',
-    'Grup Kurası',
-    'Yazı-Tura',
-    'Zar At',
-  ];
-
-  const timeOptions = [
-    'İki Tarih Arasındaki Gün Farkı Hesaplama',
-    'Hangi Gün Hesaplama',
-    'Saat Farkı Hesaplama',
-    'Tarih Hesaplama',
-  ];
-
-  const dailyOptions = [
-    'İnternet Hızı Testi',
-  ];
-
-  const renderComponent = () => {
-    switch (selectedOption) {
-      case 'İhtiyaç Kredisi Hesaplama':
-        return <PersonalLoanCalculation />;
-      case 'Lise Not Ortalaması Hesaplama':
-        return <HighSchoolAverageCalculator />;
-      case 'Hesap Makinesi':
-        return <Calculator />;
-      case 'Kredi Kartı Asgari Ödeme Hesaplama':
-        return <CreditCardMinAmount />;
-      case 'LGS Puan Hesaplayıcı':
-        return <LgsExamScore />;
-      case 'Okula Başlama Yaşı':
-        return <StartingSchoolAge />;
-      case 'Aşı Takvimi Hesaplama':
-        return <VaccinationSchedule />;
-      case 'Doğum Tarihi Hesaplama':
-        return <BirthDateCalculator />;
-      case 'MSÜ Puan Hesaplayıcı':
-        return <MsuExamScore />;
-      case 'Faktöriyel Hesaplama':
-        return <FactorialCalculator />;
-      case 'Köklü Sayı Hesaplama':
-        return <RootCalculator />;
-      case 'Çekiliş Yap':
-        return <RaffleDraw />;
-      case 'Alan Hesaplama':
-        return <AreaCalculator />;
-      case 'Kombinasyon Hesaplama':
-        return <CombinationCalculator />;
-      case 'Permütasyon Hesaplama':
-        return <PermutationCalculator />;
-      case 'Altın Fiyat Grafiği':
-        return <GoldPriceChart />;
-      case 'Gümüş Fiyat Grafiği':
-        return <SilverPriceChart />;
-      case 'Platin Fiyat Grafiği':
-        return <PlatinumPriceChart />;
-      case 'Paladyum Fiyat Grafiği':
-        return <PalladiumPriceChart />;
-      case 'Grup Kurası':
-        return <RandomGroupCreator />;
-      case 'Yazı-Tura':
-        return <CoinFlip />;
-      case 'Zar At':
-        return <DiceRoll />;
-      case 'İdeal Kilo Hesaplama':
-        return <IdealWeightCalculator />;
-      case 'Çarkıfelek Oyunu':
-        return <WheelOfFortune />;
-      case 'İki Tarih Arasındaki Gün Farkı Hesaplama':
-        return <DateDifferenceCalculator />;
-      case 'Hangi Gün Hesaplama':
-        return <DayOfWeekCalculator />;
-      case 'Saat Farkı Hesaplama':
-        return <TimeDifferenceCalculator />;
-      case 'Tarih Hesaplama':
-        return <DateManipulationCalculator />;
-      case 'İnternet Hızı Testi':
-        return <InternetSpeedTest />;
-      default:
-        return <PersonalLoanCalculation />;
-    }
+  const handleToolSelect = (tool) => {
+    setSelectedTool(tool);
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 mt-6 border border-gray-300 rounded-lg shadow-lg bg-white">
-      <h2 className="text-2xl font-bold mb-4 text-center">İstediğiniz Hesaplamayı Seçiniz</h2>
-
-      {/* İlk Dropdown - Kategori Seçimi */}
-      <select
-        value={selectedCategory}
-        onChange={(e) => {
-          setSelectedCategory(e.target.value);
-          setSelectedOption('');
-        }}
-        className="w-full p-2 border border-gray-300 rounded-md mb-4"
-      >
-        <option value="">Kategori Seçiniz</option>
-        <option value="School Calculations">Eğitim Hesaplamaları</option>
-        <option value="Economy Calculations">Ekonomi Hesaplamaları</option>
-        <option value="Fast Raffle">Hızlı Çekiliş</option>
-        <option value="Loan Calculations">Kredi Hesaplamaları</option>
-        <option value="Math Calculations">Matematik Hesaplamaları</option>
-        <option value="Health Calculations">Sağlık Hesaplamaları</option>
-        <option value="Time Calculations">Zaman Hesaplamaları</option>
-        <option value="Daily Calculations">Gündelik Hesaplamalar</option>
-      </select>
-
-      {/* İkinci Dropdown - Seçenekler */}
-      {selectedCategory === 'Loan Calculations' && (
-        <select
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md mb-4"
+    <div className="w-full">
+      {/* Kategori Seçici */}
+      <div className="relative">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex items-center justify-between hover:border-purple-500 dark:hover:border-purple-500 transition-colors duration-200"
         >
-          <option value="">Hesaplama Seçiniz</option>
-          {loanOptions.map((option, index) => (
-            <option key={index} value={option}>{option}</option>
-          ))}
-        </select>
-      )}
+          <span className="text-gray-700 dark:text-gray-300 font-medium">
+            {selectedCategory ? categories[selectedCategory].name : 'Kategori Seçin'}
+          </span>
+          <FontAwesomeIcon 
+            icon={faChevronDown} 
+            className={`text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+          />
+        </button>
 
-      {selectedCategory === 'School Calculations' && (
-        <select
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md mb-4"
-        >
-          <option value="">Hesaplama Seçiniz</option>
-          {schoolOptions.map((option, index) => (
-            <option key={index} value={option}>{option}</option>
-          ))}
-        </select>
-      )}
-
-      {selectedCategory === 'Health Calculations' && (
-        <select
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md mb-4"
-        >
-          <option value="">Hesaplama Seçiniz</option>
-          {healthOptions.map((option, index) => (
-            <option key={index} value={option}>{option}</option>
-          ))}
-        </select>
-      )}
-
-      {selectedCategory === 'Math Calculations' && (
-        <select
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md mb-4"
-        >
-          <option value="">Hesaplama Seçiniz</option>
-          {mathCalculationOptions.map((option, index) => (
-            <option key={index} value={option}>{option}</option>
-          ))}
-        </select>
-      )}
-
-      {selectedCategory === 'Economy Calculations' && (
-        <select
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md mb-4"
-        >
-          <option value="">Hesaplama Seçiniz</option>
-          {economyOptions.map((option, index) => (
-            <option key={index} value={option}>{option}</option>
-          ))}
-        </select>
-      )}
-
-      {selectedCategory === 'Fast Raffle' && (
-        <select
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md mb-4"
-        >
-          <option value="">Hesaplama Seçiniz</option>
-          {fastRaffleOptions.map((option, index) => (
-            <option key={index} value={option}>{option}</option>
-          ))}
-        </select>
-      )}
-
-      {selectedCategory === 'Time Calculations' && (
-        <select
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md mb-4"
-        >
-          <option value="">Hesaplama Seçiniz</option>
-          {timeOptions.map((option, index) => (
-            <option key={index} value={option}>{option}</option>
-          ))}
-        </select>
-      )}
-
-      {selectedCategory === 'Daily Calculations' && (
-        <select
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md mb-4"
-        >
-          <option value="">Hesaplama Seçiniz</option>
-          {dailyOptions.map((option, index) => (
-            <option key={index} value={option}>{option}</option>
-          ))}
-        </select>
-      )}
-
-      <div className="mt-6">
-        {renderComponent()}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="absolute z-10 w-full mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden"
+            >
+              {Object.entries(categories).map(([key, category]) => (
+                <motion.button
+                  key={key}
+                  whileHover={{ x: 4 }}
+                  onClick={() => handleCategorySelect(key)}
+                  className={`w-full px-4 py-3 flex items-center space-x-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 ${
+                    selectedCategory === key ? 'bg-purple-50 dark:bg-purple-900/20' : ''
+                  }`}
+                >
+                  <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${category.color} flex items-center justify-center`}>
+                    <FontAwesomeIcon icon={category.icon} className="text-white" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300">{category.name}</span>
+                </motion.button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
+
+      {/* Araçlar Grid */}
+      {selectedCategory && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4"
+        >
+          {categories[selectedCategory].tools.map((tool, index) => (
+            <motion.div
+              key={tool.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ 
+                opacity: 1, 
+                y: 0,
+                transition: { delay: index * 0.1 }
+              }}
+            >
+              <button
+                onClick={() => handleToolSelect(tool)}
+                className={`w-full p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-500 transition-colors duration-200 ${
+                  selectedTool?.name === tool.name 
+                    ? 'bg-purple-50 dark:bg-purple-900/20 border-purple-500 dark:border-purple-500' 
+                    : 'bg-white dark:bg-gray-800'
+                }`}
+              >
+                <span className="text-gray-700 dark:text-gray-300 font-medium">
+                  {tool.name}
+                </span>
+              </button>
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
+
+      {/* Seçili Araç */}
+      {selectedTool && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-8"
+        >
+          <selectedTool.component />
+        </motion.div>
+      )}
     </div>
   );
 };

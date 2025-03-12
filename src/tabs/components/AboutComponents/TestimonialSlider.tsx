@@ -1,101 +1,125 @@
-import React, { useState, useEffect } from "react";
-import Ali_Kemal_Ozturk from '../../../assets/usersImages/Ali_Kemal_Ozturk.png';
-import Zeynep_Acar from '../../../assets/usersImages/Zeynep_Acar.png';
-import Elif_Yildiz from '../../../assets/usersImages/Elif_Yildiz.png';
-import Fatih_Gurbuz from '../../../assets/usersImages/Fatih_Gurbuz.png';
-import Mehmet_Ozturk from '../../../assets/usersImages/Mehmet_Ozturk.png';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faChevronLeft, 
+  faChevronRight, 
+  faQuoteLeft 
+} from '@fortawesome/free-solid-svg-icons';
 
-const TestimonialSlider: React.FC = () => {
-  const testimonials = [
-      {
-        quote: 'PickSoSo\'nun yazılım çözümleri ile iş süreçlerimizi optimize ettik. Harika bir deneyim!',
-        name: 'Ali Kemal Öztürk',
-        role: 'Yazılım Geliştirici',
-        image: Ali_Kemal_Ozturk
-      },
-      {
-        quote: 'PickSoSo\'nun yazılım çözümleri sayesinde projelerimiz çok daha hızlı ilerliyor. Gerçekten etkileyici!',
-        name: 'Elif Yıldız',
-        role: 'Proje Yöneticisi',
-        image: Elif_Yildiz
-      },
-      {
-        quote: 'PickSoSo\'nun inovatif yazılımları, şirketimizin iş akışlarını tamamen dönüştürdü. Harika bir iş çıkarıyorlar.',
-        name: 'Murat Caner',
-        role: 'IT Müdürü',
-        image: Ali_Kemal_Ozturk
-      },
-      {
-        quote: 'Yazılım çözümleriyle iş süreçlerimizde büyük verimlilik artışı sağladık. PickSoSo\'ya teşekkür ederiz!',
-        name: 'Zeynep Acar',
-        role: 'Operasyon Müdürü',
-        image: Zeynep_Acar
-      },
-      {
-        quote: 'PickSoSo\'nun yazılım platformu ile çalışmak, takımımız için büyük bir kolaylık oldu. Süreçlerimizi çok daha verimli hale getirdi.',
-        name: 'Fatih Gürbüz',
-        role: 'Tasarımcı',
-        image: Fatih_Gurbuz
-      },
-      {
-        quote: 'PickSoSo\'nun çözümleriyle her şey çok daha hızlı ve güvenli hale geldi. İşimizi mükemmel bir şekilde destekliyorlar.',
-        name: 'Seda Demir',
-        role: 'Veritabanı Yöneticisi',
-        image: Elif_Yildiz
-      },
-      {
-        quote: 'PickSoSo\'nun yazılımları sayesinde iş süreçlerimizdeki aksaklıkları ortadan kaldırdık. Performansımız önemli ölçüde arttı.',
-        name: 'Mehmet Öztürk',
-        role: 'İş Analisti',
-        image: Mehmet_Ozturk
-      },
-      {
-        quote: 'PickSoSo\'nun çözümleri ile iş yapış şeklimiz tamamen değişti. Verimlilik oranımız hızla arttı.',
-        name: 'Ayşe Karaca',
-        role: 'Pazarlama Müdürü',
-        image: Zeynep_Acar
-      },
-      {
-        quote: 'PickSoSo\'nun yazılım çözümleri ile her şey çok daha hızlı, sorunsuz ve verimli hale geldi. Gerçekten faydalı bir deneyim.',
-        name: 'Ahmet Yılmaz',
-        role: 'Finans Müdürü',
-        image: Fatih_Gurbuz
-      }    
-  ];
+const testimonials = [
+  {
+    id: 1,
+    name: "Ahmet Yılmaz",
+    role: "Finans Uzmanı",
+    company: "ABC Bank",
+    content: "PickSoSo'nun sunduğu finansal hesaplama araçları işimizi inanılmaz kolaylaştırdı. Kullanıcı dostu arayüzü ve hızlı sonuçlarıyla kesinlikle tavsiye ediyorum.",
+    image: "https://i.pravatar.cc/150?img=1"
+  },
+  {
+    id: 2,
+    name: "Ayşe Kaya",
+    role: "Eğitim Danışmanı",
+    company: "XYZ Eğitim",
+    content: "Öğrencilerimizin matematik hesaplamalarında kullandığı en iyi araç. Basit ve anlaşılır arayüzü sayesinde herkes kolayca kullanabiliyor.",
+    image: "https://i.pravatar.cc/150?img=2"
+  },
+  {
+    id: 3,
+    name: "Mehmet Demir",
+    role: "Yazılım Geliştirici",
+    company: "Tech Solutions",
+    content: "Hesaplama araçlarının çeşitliliği ve doğruluğu gerçekten etkileyici. API entegrasyonu sayesinde kendi projelerimizde de kullanabiliyoruz.",
+    image: "https://i.pravatar.cc/150?img=3"
+  }
+];
 
+const TestimonialSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % (testimonials.length - 3));
-    }, 3000);
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
-    return () => clearInterval(timer);
-  }, []);
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+    );
+  };
 
   return (
-    <div className="w-full bg-white p-6 rounded-lg shadow-lg overflow-hidden">
-      <h3 className="text-2xl font-semibold text-center mb-4">Kullanıcı Yorumları</h3>
-      <div className="relative">
-        <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 25}%)` }}>
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0 w-72 p-4 bg-gray-50 rounded-lg shadow-md mx-4 h-[230px] flex flex-col justify-between"
-            >
-              <p className="text-lg text-gray-700 mb-4">"{testimonial.quote}"</p>
-              <div className="flex items-center space-x-3">
-                <img 
-                  src={testimonial.image} 
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <p className="font-semibold text-gray-800">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500">{testimonial.role}</p>
-                </div>
+    <div className="relative">
+      <div className="max-w-4xl mx-auto px-4">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12"
+          >
+            <div className="text-purple-600 dark:text-purple-400 mb-6">
+              <FontAwesomeIcon icon={faQuoteLeft} size="2x" />
+            </div>
+            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8 italic">
+              "{testimonials[currentIndex].content}"
+            </p>
+            <div className="flex items-center">
+              <img
+                src={testimonials[currentIndex].image}
+                alt={testimonials[currentIndex].name}
+                className="w-16 h-16 rounded-full object-cover mr-4"
+              />
+              <div>
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {testimonials[currentIndex].name}
+                </h4>
+                <p className="text-purple-600 dark:text-purple-400">
+                  {testimonials[currentIndex].role}
+                </p>
+                <p className="text-gray-500 dark:text-gray-400">
+                  {testimonials[currentIndex].company}
+                </p>
               </div>
             </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Navigation Buttons */}
+        <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between items-center px-4">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={prevSlide}
+            className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 shadow-lg flex items-center justify-center text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={nextSlide}
+            className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 shadow-lg flex items-center justify-center text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+          >
+            <FontAwesomeIcon icon={faChevronRight} />
+          </motion.button>
+        </div>
+
+        {/* Dots Navigation */}
+        <div className="flex justify-center space-x-2 mt-8">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-3 h-3 rounded-full transition-colors duration-200 ${
+                index === currentIndex 
+                  ? 'bg-purple-600 dark:bg-purple-400' 
+                  : 'bg-gray-300 dark:bg-gray-600'
+              }`}
+            />
           ))}
         </div>
       </div>
